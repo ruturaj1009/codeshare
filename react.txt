@@ -1,52 +1,34 @@
 import { useState } from 'react';
-import { Tweet as TweetType } from '../types';
-import { Tweet } from './Tweet';
-import { TweetComposer } from './TweetComposer';
 
-export const MainContent: React.FC = () => {
-  const [tweets] = useState<TweetType[]>([
-    {
-      id: 1,
-      author: 'Elon Musk',
-      username: '@elonmusk',
-      content: 'Definitely 😂',
-      likes: '135K',
-      retweets: '11K',
-      replies: '2.3K',
-      views: '38M'
-    }
-  ]);
+export const TweetComposer: React.FC = () => {
+  const [tweetText, setTweetText] = useState('');
 
-  const [activeTab, setActiveTab] = useState<'for-you' | 'following'>('for-you');
+  const handleTweetChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTweetText(e.target.value);
+  };
+
+  const handleTweetSubmit = () => {
+    // Handle tweet submission logic here
+    console.log('Tweeting:', tweetText);
+    setTweetText('');
+  };
 
   return (
-    <div className="col-12 col-md-6 offset-md-3 offset-lg-2 mb-5 mb-md-0">
-      <div className="border-bottom border-secondary p-3">
-        <div className="d-flex justify-content-between align-items-center mb-3">
-          <button
-            className={`btn btn-link text-white ${activeTab === 'for-you' ? 'active' : ''}`}
-            onClick={() => setActiveTab('for-you')}
-          >
-            For you
-          </button>
-          <button
-            className={`btn btn-link text-white ${activeTab === 'following' ? 'active' : ''}`}
-            onClick={() => setActiveTab('following')}
-          >
-            Following
-          </button>
+    <div className="mt-3">
+      <textarea
+        className="form-control bg-black text-white border-0 mb-2"
+        placeholder="What's happening?!"
+        rows={3}
+        value={tweetText}
+        onChange={handleTweetChange}
+      />
+      <div className="d-flex justify-content-between align-items-center">
+        <div className="d-flex gap-2">
+          {/* Add tweet composer icons here */}
         </div>
-        
-        {activeTab === 'for-you' && (
-          <>
-            <h5>What's happening?!</h5>
-            <TweetComposer />
-          </>
-        )}
-
-        {tweets.map(tweet => (
-          <Tweet key={tweet.id} tweet={tweet} />
-        ))}
+        <button className="btn btn-primary rounded-pill px-4" onClick={handleTweetSubmit}>
+          Post
+        </button>
       </div>
     </div>
   );

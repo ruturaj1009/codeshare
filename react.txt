@@ -1,0 +1,106 @@
+import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+const TwitterClone = () => {
+  const [tweets, setTweets] = useState([
+    {
+      id: 1,
+      author: 'Elon Musk',
+      username: '@elonmusk',
+      content: 'Definitely 😂',
+      likes: '135K',
+      retweets: '11K',
+      replies: '2.3K',
+      views: '38M'
+    }
+  ]);
+
+  const trendingTopics = [
+    { title: '2nd December', posts: '42.6K', category: 'Trending in India' },
+    { title: '#AnanyaPanday', posts: '1,473', category: 'Entertainment' },
+    { title: '$XRP', posts: '625K', category: 'Trending' },
+    { title: 'Supreme Court', posts: '54.1K', category: 'Politics' }
+  ];
+
+  return (
+    <div className="container-fluid">
+      <div className="row">
+        {/* Sidebar */}
+        <div className="col-md-3 col-lg-2 d-none d-md-block bg-dark text-white min-vh-100 position-fixed">
+          <div className="d-flex flex-column p-3">
+            <h3 className="mb-4">X</h3>
+            <nav className="nav flex-column">
+              {['Home', 'Explore', 'Notifications', 'Messages', 'Communities', 'Premium', 'Profile'].map(item => (
+                <a key={item} href="#" className="nav-link text-white py-2">
+                  {item}
+                </a>
+              ))}
+            </nav>
+            <button className="btn btn-primary rounded-pill mt-3 w-100">Post</button>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="col-12 col-md-6 offset-md-3 offset-lg-2">
+          <div className="border-bottom p-3">
+            <h5>For you</h5>
+            <div className="mt-3">
+              <textarea 
+                className="form-control bg-dark text-white border-0" 
+                placeholder="What is happening?!"
+                rows="3"
+              />
+              <div className="d-flex justify-content-between align-items-center mt-2">
+                <div className="d-flex gap-2">
+                  <button className="btn btn-outline-primary btn-sm">Media</button>
+                  <button className="btn btn-outline-primary btn-sm">Poll</button>
+                </div>
+                <button className="btn btn-primary rounded-pill">Post</button>
+              </div>
+            </div>
+          </div>
+
+          {/* Tweets */}
+          {tweets.map(tweet => (
+            <div key={tweet.id} className="p-3 border-bottom">
+              <div className="d-flex gap-2">
+                <div className="rounded-circle bg-secondary" style={{ width: 48, height: 48 }}></div>
+                <div>
+                  <div className="d-flex gap-2 align-items-center">
+                    <strong>{tweet.author}</strong>
+                    <span className="text-muted">{tweet.username}</span>
+                  </div>
+                  <p>{tweet.content}</p>
+                  <div className="d-flex justify-content-between text-muted">
+                    <span>{tweet.replies}</span>
+                    <span>{tweet.retweets}</span>
+                    <span>{tweet.likes}</span>
+                    <span>{tweet.views}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Right Sidebar */}
+        <div className="col-md-3 d-none d-lg-block position-fixed end-0">
+          <div className="p-3">
+            <div className="bg-dark rounded p-3 mb-3">
+              <h5>What's happening</h5>
+              {trendingTopics.map((topic, index) => (
+                <div key={index} className="mb-3">
+                  <small className="text-muted">{topic.category}</small>
+                  <div className="fw-bold">{topic.title}</div>
+                  <small className="text-muted">{topic.posts} posts</small>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TwitterClone;

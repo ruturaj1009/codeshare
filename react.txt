@@ -1,3 +1,236 @@
+
+  // HomePage.tsx
+  import { useState } from 'react';
+  import { LeftSidebar } from '../components/LeftSideBar';
+  import { MainContent } from '../components/MainComponent';
+  import { RightSidebar } from '../components/RightSideBar';
+  
+  const HomePage: React.FC = () => {
+    const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
+  
+    return (
+      <div className="container-fluid bg-black text-white">
+        <div className="row">
+          <LeftSidebar showMobileMenu={showMobileMenu} setShowMobileMenu={setShowMobileMenu} />
+          <MainContent />
+          <RightSidebar />
+        </div>
+      </div>
+    );
+  };
+  
+  export default HomePage;
+
+
+
+  
+  // components/LeftSidebar.tsx
+import { Home, Search, Bell, Mail, Users, Star, User, MoreHorizontal, Hash } from 'lucide-react';
+import { MobileMenu } from './MobileMenu';
+import { NavItem } from '../types/index';
+
+interface LeftSidebarProps {
+  showMobileMenu: boolean;
+  setShowMobileMenu: (show: boolean) => void;
+}
+
+export const LeftSidebar: React.FC<LeftSidebarProps> = ({ showMobileMenu, setShowMobileMenu }) => {
+  const navItems: NavItem[] = [
+    { icon: <Home size={24} />, label: 'Home' },
+    { icon: <Search size={24} />, label: 'Explore' },
+    { icon: <Bell size={24} />, label: 'Notifications' },
+    { icon: <Mail size={24} />, label: 'Messages' },
+    { icon: <Hash size={24} />, label: 'Grok' },
+    { icon: <Users size={24} />, label: 'Communities' },
+    { icon: <Star size={24} />, label: 'Premium' },
+    { icon: <User size={24} />, label: 'Profile' },
+    { icon: <MoreHorizontal size={24} />, label: 'More' }
+  ];
+
+  return (
+    <>
+      <div className="col-md-3 col-lg-3 d-none bg-black text-white d-md-block min-vh-100 position-fixed">
+        <div className="d-flex flex-column p-3">
+          <div className="mb-3">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="white">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </div>
+
+          <nav className="nav flex-column gap-1">
+            {navItems.map(item => (
+              <a key={item.label} href="#" className="nav-link text-white py-2 px-3 d-flex align-items-center gap-3 hover-bg-dark rounded-pill">
+                {item.icon}
+                <span className="fs-5">{item.label}</span>
+              </a>
+            ))}
+          </nav>
+
+          <button className="btn btn-primary rounded-pill mt-2 w-100 py-2 ">Post</button>
+
+          <div className="mt-2 mb-3">
+            <button className="btn btn-dark rounded-pill w-100 d-flex align-items-center gap-2 p-2">
+              <div className="rounded-circle bg-secondary" style={{ width: 40, height: 40 }}></div>
+              <div className="text-start">
+                <div className="fw-bold">RUTURAJ SAHU</div>
+                <div className="text-secondary">@ruturaj1009</div>
+              </div>
+              <MoreHorizontal className="ms-auto" />
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <MobileMenu
+        navItems={navItems} 
+        showMobileMenu={showMobileMenu} 
+        setShowMobileMenu={setShowMobileMenu} 
+      />
+    </>
+  );
+};
+
+//MainComponent.tsx
+
+import { useState } from "react";
+import { Tweet as TweetType } from "../types";
+import { Tweet } from "./Tweet";
+import { TweetComposer } from "./TweetComposer";
+
+export const MainContent: React.FC = () => {
+  const [tweets] = useState<TweetType[]>([
+    {
+      id: 1,
+      author: "Elon Musk",
+      username: "@elonmusk",
+      content: "Definitely 😂",
+      likes: "135K",
+      retweets: "11K",
+      replies: "2.3K",
+      views: "38M",
+    },
+    {
+      id: 2,
+      author: "Elon Musk",
+      username: "@elonmusk",
+      content: "Definitely 😂",
+      likes: "135K",
+      retweets: "11K",
+      replies: "2.3K",
+      views: "38M",
+    },
+    {
+      id: 3,
+      author: "Elon Musk",
+      username: "@elonmusk",
+      content: "Definitely 😂",
+      likes: "135K",
+      retweets: "11K",
+      replies: "2.3K",
+      views: "38M",
+    },
+    {
+      id: 4,
+      author: "Elon Musk",
+      username: "@elonmusk",
+      content: "Definitely 😂",
+      likes: "135K",
+      retweets: "11K",
+      replies: "2.3K",
+      views: "38M",
+    },
+    {
+        id: 5,
+        author: "Elon Musk",
+        username: "@elonmusk",
+        content: "Definitely 😂",
+        likes: "135K",
+        retweets: "11K",
+        replies: "2.3K",
+        views: "38M",
+      },
+      {
+        id: 6,
+        author: "Elon Musk",
+        username: "@elonmusk",
+        content: "Definitely 😂",
+        likes: "135K",
+        retweets: "11K",
+        replies: "2.3K",
+        views: "38M",
+      },
+      {
+        id: 7,
+        author: "Elon Musk",
+        username: "@elonmusk",
+        content: "Definitely 😂",
+        likes: "135K",
+        retweets: "11K",
+        replies: "2.3K",
+        views: "38M",
+      },
+      {
+        id: 8,
+        author: "Elon Musk",
+        username: "@elonmusk",
+        content: "Definitely 😂",
+        likes: "135K",
+        retweets: "11K",
+        replies: "2.3K",
+        views: "38M",
+      },
+  ]);
+
+  const [activeTab, setActiveTab] = useState<"for-you" | "following">(
+    "for-you"
+  );
+
+  return (
+    <div className="col-12 col-md-6 col-lg-6 offset-md-3 offset-lg-3 mb-5 mb-md-0 position-sticky">
+      <div className="border-bottom border-secondary p-3">
+        <div
+          role="tablist"
+          className="d-flex justify-content-between align-items-center nav nav-underline mb-3 text-center"
+        >
+          <button
+            role="tab"
+            area-selected="true"
+            className={`btn text-white m-auto ${
+              activeTab === "for-you" ? "active" : ""
+            }`}
+            onClick={() => setActiveTab("for-you")}
+          >
+            For you
+          </button>
+          <button
+            role="tab"
+            area-selected="false"
+            className={`btn text-white m-auto ${
+              activeTab === "following" ? "active" : ""
+            }`}
+            onClick={() => setActiveTab("following")}
+          >
+            Following
+          </button>
+        </div>
+
+        {activeTab === "for-you" && (
+          <>
+            <TweetComposer />
+          </>
+        )}
+
+        {tweets.map((tweet) => (
+          <Tweet key={tweet.id} tweet={tweet} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+
+//TweetComposer.tsx
 import { useState } from 'react';
 
 export const TweetComposer: React.FC = () => {
@@ -14,9 +247,9 @@ export const TweetComposer: React.FC = () => {
   };
 
   return (
-    <div className="mt-3">
+    <div className="mt-3 text-white">
       <textarea
-        className="form-control bg-black text-white border-0 mb-2"
+        className="form-control bg-black text-white border-white mb-2"
         placeholder="What's happening?!"
         rows={3}
         value={tweetText}
@@ -29,6 +262,104 @@ export const TweetComposer: React.FC = () => {
         <button className="btn btn-primary rounded-pill px-4" onClick={handleTweetSubmit}>
           Post
         </button>
+      </div>
+    </div>
+  );
+};
+
+
+ // components/Tweet.tsx
+ import { Tweet as TweetType } from '../types/index';
+  
+ interface TweetProps {
+   tweet: TweetType;
+ }
+ 
+ export const Tweet: React.FC<TweetProps> = ({ tweet }) => {
+   return (
+     <div className="p-3 border-bottom border-secondary">
+       <div className="d-flex gap-2">
+         <div className="rounded-circle bg-secondary" style={{ width: 48, height: 48 }}></div>
+         <div>
+           <div className="d-flex gap-2 align-items-center">
+             <strong>{tweet.author}</strong>
+             <span className="text-muted">{tweet.username}</span>
+           </div>
+           <p>{tweet.content}</p>
+           <img src={"th.jpg"} alt="image" />
+           <div className="d-flex justify-content-between text-muted">
+             <span>{tweet.replies}</span>
+             <span>{tweet.retweets}</span>
+             <span>{tweet.likes}</span>
+             <span>{tweet.views}</span>
+           </div>
+         </div>
+       </div>
+     </div>
+   );
+ };
+
+ // components/MobileMenu.tsx
+ import { NavItem } from '../types/index';
+  
+ interface MobileMenuProps {
+   navItems: NavItem[];
+   showMobileMenu: boolean;
+   setShowMobileMenu: (show: boolean) => void;
+ }
+ 
+ export const MobileMenu: React.FC<MobileMenuProps> = ({ navItems, showMobileMenu, setShowMobileMenu }) => {
+   return (
+     <>
+       <div 
+         className={`d-md-none position-fixed top-0 start-0 h-100 bg-black w-75 p-3 z-3 ${showMobileMenu ? 'translate-x-0' : 'translate-x-100'}`}
+         style={{ 
+           transform: showMobileMenu ? 'translateX(0)' : 'translateX(-100%)',
+           transition: 'transform 0.3s ease-in-out'
+         }}
+       >
+         {/* Mobile menu content */}
+       </div>
+       {showMobileMenu && (
+         <div 
+           className="position-fixed top-0 start-0 w-100 h-100 bg-black bg-opacity-50 d-md-none z-2"
+           onClick={() => setShowMobileMenu(false)}
+         />
+       )}
+     </>
+   );
+ };
+
+
+// components/RightSidebar.tsx
+import { TrendingTopic } from '../types/index';
+  
+export const RightSidebar: React.FC = () => {
+  const trendingTopics: TrendingTopic[] = [
+    { title: '2nd December', posts: '42.6K', category: 'Trending in India' },
+    { title: '#AnanyaPanday', posts: '1,473', category: 'Entertainment' },
+    { title: '$XRP', posts: '625K', category: 'Trending' },
+    { title: 'Supreme Court', posts: '54.1K', category: 'Politics' }
+  ];
+
+  return (
+    <div className="col-md-3 col-lg-3 bg-black d-lg-block min-vh-100 position-fixed end-0">
+      <div className="px-2 py-3">
+      <div className="bg-dark rounded-4 p-3 mb-3">
+          <h4>Ending Today!</h4>
+          <h6>Get 40% off X premium.</h6>
+          <button className='btn btn-secondary rounded-pill'>Claim Offer</button>
+        </div>
+        <div className="bg-dark-subtle rounded-4 p-3 mb-3">
+          <h5>What's happening</h5>
+          {trendingTopics.map((topic, index) => (
+            <div key={index} className="mb-3">
+              <small className="text-muted">{topic.category}</small>
+              <div className="fw-bold">{topic.title}</div>
+              <small className="text-muted">{topic.posts} posts</small>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

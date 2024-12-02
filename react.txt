@@ -1,22 +1,7 @@
-import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { 
-  Home, 
-  Search, 
-  Bell, 
-  Mail, 
-  Users, 
-  Star, 
-  User,
-  MoreHorizontal,
-  Hash,
-  PlusCircle,
-  Menu
-} from 'lucide-react';
+// LeftSidebar.js
+import { Home, Search, Bell, Mail, Users, Star, User, MoreHorizontal, Hash } from 'lucide-react';
 
-const TwitterClone = () => {
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
-
+export const LeftSidebar = ({ showMobileMenu, setShowMobileMenu }) => {
   const navItems = [
     { icon: <Home size={24} />, label: 'Home' },
     { icon: <Search size={24} />, label: 'Explore' },
@@ -29,9 +14,53 @@ const TwitterClone = () => {
     { icon: <MoreHorizontal size={24} />, label: 'More' }
   ];
 
-  const mobileNavItems = navItems.slice(0, 5); // Only show main nav items on mobile
+  return (
+    <>
+      <div className="col-md-3 col-lg-2 d-none d-md-block min-vh-100 position-fixed">
+        <div className="d-flex flex-column p-3">
+          <div className="mb-4">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="white">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </div>
 
-  const [tweets, setTweets] = useState([
+          <nav className="nav flex-column gap-1">
+            {navItems.map(item => (
+              <a key={item.label} href="#" className="nav-link text-white py-2 px-3 d-flex align-items-center gap-3 hover-bg-dark rounded-pill">
+                {item.icon}
+                <span className="fs-5">{item.label}</span>
+              </a>
+            ))}
+          </nav>
+
+          <button className="btn btn-primary rounded-pill mt-3 w-100 py-3">Post</button>
+
+          <div className="mt-auto mb-3">
+            <button className="btn btn-dark rounded-pill w-100 d-flex align-items-center gap-2 p-2">
+              <div className="rounded-circle bg-secondary" style={{ width: 40, height: 40 }}></div>
+              <div className="text-start">
+                <div className="fw-bold">RUTURAJ SAHU</div>
+                <div className="text-muted">@ruturaj1009</div>
+              </div>
+              <MoreHorizontal className="ms-auto" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      <MobileMenu 
+        navItems={navItems} 
+        showMobileMenu={showMobileMenu} 
+        setShowMobileMenu={setShowMobileMenu} 
+      />
+    </>
+  );
+};
+
+// MainContent.js
+export const MainContent = () => {
+  const [tweets] = useState([
     {
       id: 1,
       author: 'Elon Musk',
@@ -44,6 +73,22 @@ const TwitterClone = () => {
     }
   ]);
 
+  return (
+    <div className="col-12 col-md-6 offset-md-3 offset-lg-2 mb-5 mb-md-0">
+      <div className="border-bottom border-secondary p-3">
+        <h5>For you</h5>
+        <TweetComposer />
+      </div>
+      
+      {tweets.map(tweet => (
+        <Tweet key={tweet.id} tweet={tweet} />
+      ))}
+    </div>
+  );
+};
+
+// RightSidebar.js
+export const RightSidebar = () => {
   const trendingTopics = [
     { title: '2nd December', posts: '42.6K', category: 'Trending in India' },
     { title: '#AnanyaPanday', posts: '1,473', category: 'Entertainment' },
@@ -52,122 +97,102 @@ const TwitterClone = () => {
   ];
 
   return (
-    <div className="container-fluid bg-black text-white">
-      <div className="row">
-        {/* Desktop Sidebar */}
-        <div className="col-md-3 col-lg-2 d-none d-md-block min-vh-100 position-fixed">
-          <div className="d-flex flex-column p-3">
-            <div className="mb-4">
-              <svg viewBox="0 0 24 24" width="30" height="30" fill="white">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-              </svg>
+    <div className="col-md-3 d-none d-lg-block position-fixed end-0">
+      <div className="p-3">
+        <div className="bg-dark rounded-4 p-3 mb-3">
+          <h5>What's happening</h5>
+          {trendingTopics.map((topic, index) => (
+            <div key={index} className="mb-3">
+              <small className="text-muted">{topic.category}</small>
+              <div className="fw-bold">{topic.title}</div>
+              <small className="text-muted">{topic.posts} posts</small>
             </div>
-
-            <nav className="nav flex-column gap-1">
-              {navItems.map(item => (
-                <a 
-                  key={item.label} 
-                  href="#" 
-                  className="nav-link text-white py-2 px-3 d-flex align-items-center gap-3 hover-bg-dark rounded-pill"
-                >
-                  {item.icon}
-                  <span className="fs-5">{item.label}</span>
-                </a>
-              ))}
-            </nav>
-
-            <button className="btn btn-primary rounded-pill mt-3 w-100 py-3">
-              Post
-            </button>
-
-            <div className="mt-auto mb-3">
-              <button className="btn btn-dark rounded-pill w-100 d-flex align-items-center gap-2 p-2">
-                <div className="rounded-circle bg-secondary" style={{ width: 40, height: 40 }}></div>
-                <div className="text-start">
-                  <div className="fw-bold">RUTURAJ SAHU</div>
-                  <div className="text-muted">@ruturaj1009</div>
-                </div>
-                <MoreHorizontal className="ms-auto" />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button 
-          className="btn btn-dark d-md-none position-fixed top-0 start-0 m-2 z-3"
-          onClick={() => setShowMobileMenu(!showMobileMenu)}
-        >
-          <Menu size={24} />
-        </button>
-
-        {/* Mobile Sidebar */}
-        <div 
-          className={`d-md-none position-fixed top-0 start-0 h-100 bg-black w-75 p-3 z-3 ${showMobileMenu ? 'translate-x-0' : 'translate-x-100'}`}
-          style={{ 
-            transform: showMobileMenu ? 'translateX(0)' : 'translateX(-100%)',
-            transition: 'transform 0.3s ease-in-out'
-          }}
-        >
-          {/* Mobile sidebar content - same as desktop */}
-          <div className="d-flex flex-column h-100">
-            <div className="mb-4">
-              <svg viewBox="0 0 24 24" width="30" height="30" fill="white">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-              </svg>
-            </div>
-            
-            <nav className="nav flex-column gap-1">
-              {navItems.map(item => (
-                <a 
-                  key={item.label} 
-                  href="#" 
-                  className="nav-link text-white py-2 px-3 d-flex align-items-center gap-3"
-                  onClick={() => setShowMobileMenu(false)}
-                >
-                  {item.icon}
-                  <span>{item.label}</span>
-                </a>
-              ))}
-            </nav>
-          </div>
-        </div>
-
-        {/* Overlay for mobile menu */}
-        {showMobileMenu && (
-          <div 
-            className="position-fixed top-0 start-0 w-100 h-100 bg-black bg-opacity-50 d-md-none z-2"
-            onClick={() => setShowMobileMenu(false)}
-          />
-        )}
-
-        {/* Bottom Mobile Navigation */}
-        <div className="d-md-none fixed-bottom bg-black border-top border-secondary py-2 z-1">
-          <div className="d-flex justify-content-around">
-            {mobileNavItems.map(item => (
-              <a 
-                key={item.label} 
-                href="#" 
-                className="text-white text-center"
-              >
-                {item.icon}
-              </a>
-            ))}
-          </div>
-        </div>
-
-        {/* Main Content */}
-        <div className="col-12 col-md-6 offset-md-3 offset-lg-2 mb-5 mb-md-0">
-          {/* ... Rest of the main content remains the same ... */}
-        </div>
-
-        {/* Right Sidebar */}
-        <div className="col-md-3 d-none d-lg-block position-fixed end-0">
-          {/* ... Right sidebar content remains the same ... */}
+          ))}
         </div>
       </div>
     </div>
   );
 };
 
-export default TwitterClone;
+// Smaller Components
+const MobileMenu = ({ navItems, showMobileMenu, setShowMobileMenu }) => {
+  return (
+    <>
+      <div 
+        className={`d-md-none position-fixed top-0 start-0 h-100 bg-black w-75 p-3 z-3 ${showMobileMenu ? 'translate-x-0' : 'translate-x-100'}`}
+        style={{ 
+          transform: showMobileMenu ? 'translateX(0)' : 'translateX(-100%)',
+          transition: 'transform 0.3s ease-in-out'
+        }}
+      >
+        {/* Mobile menu content */}
+      </div>
+      {showMobileMenu && (
+        <div 
+          className="position-fixed top-0 start-0 w-100 h-100 bg-black bg-opacity-50 d-md-none z-2"
+          onClick={() => setShowMobileMenu(false)}
+        />
+      )}
+    </>
+  );
+};
+
+const Tweet = ({ tweet }) => {
+  return (
+    <div className="p-3 border-bottom border-secondary">
+      <div className="d-flex gap-2">
+        <div className="rounded-circle bg-secondary" style={{ width: 48, height: 48 }}></div>
+        <div>
+          <div className="d-flex gap-2 align-items-center">
+            <strong>{tweet.author}</strong>
+            <span className="text-muted">{tweet.username}</span>
+          </div>
+          <p>{tweet.content}</p>
+          <div className="d-flex justify-content-between text-muted">
+            <span>{tweet.replies}</span>
+            <span>{tweet.retweets}</span>
+            <span>{tweet.likes}</span>
+            <span>{tweet.views}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const TweetComposer = () => {
+  return (
+    <div className="mt-3">
+      <textarea 
+        className="form-control bg-black text-white border-0" 
+        placeholder="What is happening?!"
+        rows="3"
+      />
+      <div className="d-flex justify-content-between align-items-center mt-2">
+        <div className="d-flex gap-2">
+          <button className="btn btn-outline-primary btn-sm rounded-circle">
+            <PlusCircle size={18} />
+          </button>
+        </div>
+        <button className="btn btn-primary rounded-pill px-4">Post</button>
+      </div>
+    </div>
+  );
+};
+
+// App.js
+const App = () => {
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+
+  return (
+    <div className="container-fluid bg-black text-white">
+      <div className="row">
+        <LeftSidebar showMobileMenu={showMobileMenu} setShowMobileMenu={setShowMobileMenu} />
+        <MainContent />
+        <RightSidebar />
+      </div>
+    </div>
+  );
+};
+
+export default App;
